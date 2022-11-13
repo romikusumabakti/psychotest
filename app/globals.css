@@ -1,26 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Google Sans Text, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@layer base {
+  @font-face {
+    font-family: "Google Sans Display";
+    src: url("./fonts/Google Sans Display/GoogleSansDisplay-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
   }
-  body {
-    color: white;
-    background: black;
+
+  @font-face {
+    font-family: "Google Sans Display";
+    src: url("./fonts/Google Sans Display/GoogleSansDisplay-Italic.ttf");
+    font-weight: normal;
+    font-style: italic;
   }
+
+  @font-face {
+    font-family: "Google Sans Display";
+    src: url("./fonts/Google Sans Display/GoogleSansDisplay-Medium.ttf");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Google Sans Display";
+    src: url("./fonts/Google Sans Display/GoogleSansDisplay-MediumItalic.ttf");
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Google Sans Display";
+    src: url("./fonts/Google Sans Display/GoogleSansDisplay-Bold.ttf");
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Google Sans Display";
+    src: url("./fonts/Google Sans Display/GoogleSansDisplay-BoldItalic.ttf");
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Google Sans Text";
+    src: url("./fonts/Google Sans Text/GoogleSansText-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Google Sans Text";
+    src: url("./fonts/Google Sans Text/GoogleSansText-Italic.ttf");
+    font-weight: normal;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Google Sans Text";
+    src: url("./fonts/Google Sans Text/GoogleSansText-Medium.ttf");
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Google Sans Text";
+    src: url("./fonts/Google Sans Text/GoogleSansText-MediumItalic.ttf");
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Google Sans Text";
+    src: url("./fonts/Google Sans Text/GoogleSansText-Bold.ttf");
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Google Sans Text";
+    src: url("./fonts/Google Sans Text/GoogleSansText-BoldItalic.ttf");
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .display {
+    font-family: Google Sans Display, sans-serif;
+  }
+
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  a {
+    @apply text-primary hover:underline;
+  }
+
+  [data-nextjs-scroll-focus-boundary] {
+    @apply overflow-y-auto flex flex-col grow;
+  }
+}
+
+.card {
+  @apply p-8 bg-primary/5 rounded-3xl;
+}
+
+.button {
+  @apply h-10 px-6 bg-primary text-on-primary rounded-full font-medium text-sm flex gap-2 items-center justify-center hover:bg-gradient-to-r from-on-primary/[.38] to-on-primary/[.38];
+}
+
+input[type="text"] {
+  @apply h-14 px-4 border border-outline rounded-[4px] outline-primary bg-transparent;
 }

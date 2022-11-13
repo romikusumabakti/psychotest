@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  name     String?
+  password String
+}
+
+model Psychotest {
+  id           Int           @id @default(autoincrement())
+  name         String
+  token        String?
+  participants Participant[]
+}
+
+// enum Test {
+//   IST_1
+//   IST_2
+//   IST_3
+//   IST_4
+//   IST_5
+//   IST_6
+//   IST_7
+//   IST_8
+//   IST_9
+//   EPPS
+//   PAPI
+// }
+
+model Participant {
+  id           Int        @id @default(autoincrement())
+  number       Int
+  nik          String
+  name         String
+  psychotest   Psychotest @relation(fields: [psychotestId], references: [id])
+  psychotestId Int
+  testStart    DateTime?
+  currentTest  Int        @default(0)
+  answers      Answer[]
+}
+
+model Answer {
+  id            Int         @id @default(autoincrement())
+  participant   Participant @relation(fields: [participantId], references: [id])
+  participantId Int
+  test          Int
+  start         DateTime    @default(now())
+  end           DateTime
+  answers       String[]
+}
