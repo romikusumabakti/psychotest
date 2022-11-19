@@ -41,7 +41,7 @@ model Psychotest {
 model Participant {
   id           Int        @id @default(autoincrement())
   number       Int
-  nik          String
+  nip          String
   name         String
   psychotest   Psychotest @relation(fields: [psychotestId], references: [id])
   psychotestId Int
@@ -56,6 +56,6 @@ model Answer {
   participantId Int
   test          Int
   start         DateTime    @default(now())
-  end           DateTime
+  end           DateTime?
   answers       String[]
 }

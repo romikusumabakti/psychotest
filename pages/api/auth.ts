@@ -24,13 +24,13 @@ export default async function handler(
       const participant = await prisma.participant.findFirst({
         where: {
           psychotestId: psychotest.id,
-          nik: req.body.nik,
+          nip: req.body.nip,
         },
       });
       if (participant) {
         res.status(200).send(jwt.sign(participant, "puc", { expiresIn: "1d" }));
       } else {
-        res.status(400).send("NIK salah.");
+        res.status(400).send("NIP salah.");
       }
     } else {
       res.status(400).send("Token salah.");

@@ -92,6 +92,18 @@ body {
     font-style: italic;
   }
 
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-primary/5 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/[.15] rounded-full;
+  }
+
   h1,
   h2,
   h3,
@@ -124,9 +136,33 @@ body {
 }
 
 .button {
-  @apply h-10 px-6 bg-primary text-on-primary rounded-full font-medium text-sm flex gap-2 items-center justify-center hover:bg-gradient-to-r from-on-primary/[.38] to-on-primary/[.38];
+  @apply h-10 px-6 rounded-full font-medium text-sm flex gap-2 items-center justify-center hover:bg-gradient-to-r;
+}
+
+.button-filled {
+  @apply bg-primary text-on-primary from-on-primary/[.08] to-on-primary/[.08];
+}
+
+.button-tonal {
+  @apply bg-secondary-container text-on-secondary-container from-on-secondary-container/[.08] to-on-secondary-container/[.08];
 }
 
 input[type="text"] {
   @apply h-14 px-4 border border-outline rounded-[4px] outline-primary bg-transparent;
+}
+
+@keyframes circular-progress-indicator {
+  0% {
+    stroke-dasharray: 1px, 200px;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -15px;
+  }
+
+  100% {
+    stroke-dasharray: 100px, 200px;
+    stroke-dashoffset: -125px;
+  }
 }
