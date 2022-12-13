@@ -27,7 +27,18 @@ export default async function handler(
           nip: req.body.nip,
         },
       });
+      console.log(participant);
       if (participant) {
+        await prisma.participant.updateMany({
+          where: {
+            psychotestId: psychotest.id,
+            nip: req.body.nip,
+          },
+          data: {
+            dateOfBirth: req.body.dateOfBirth,
+            gender: req.body.gender,
+          },
+        });
         res.status(200).send(jwt.sign(participant, "puc", { expiresIn: "1d" }));
       } else {
         res.status(400).send("NIP salah.");

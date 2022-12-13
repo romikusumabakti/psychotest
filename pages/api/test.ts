@@ -17,7 +17,7 @@ import ist9 from "../../tests/ist/9.json";
 import epps from "../../tests/epps.json";
 import papi from "../../tests/papi.json";
 
-const tests: Test[] = [
+export const tests: Test[] = [
   ist1,
   ist2,
   ist3,
@@ -27,7 +27,7 @@ const tests: Test[] = [
   ist7,
   ist8,
   ist9,
-  epps,
+  // epps,
   papi,
 ];
 
@@ -86,7 +86,7 @@ export default async function handler(
     });
     const test = tests[participant.currentTest - 1];
     const time = new Date();
-    time.setMinutes(time.getMinutes() + (test.duration || 30));
+    test.duration && time.setMinutes(time.getMinutes() + test.duration);
     const answer = await prisma.answer.create({
       data: {
         participant: {
@@ -95,7 +95,7 @@ export default async function handler(
           },
         },
         test: participant.currentTest,
-        end: time,
+        end: test.duration ? time : null,
         answers: new Array(test.questions!.length).fill(""),
       },
     });
@@ -139,7 +139,10 @@ export default async function handler(
           },
         });
         if (answer) {
-          if (!answer.end || new Date() < answer.end) {
+          if (
+            !tests[participant.currentTest - 1].end ||
+            new Date() < answer.end!
+          ) {
             // tes sedang berjalan
             test = tests[participant.currentTest - 1];
             res.status(200).json({
@@ -152,9 +155,13 @@ export default async function handler(
             if (participant.currentTest < tests.length) {
               res.status(200).json(await nextTest());
             } else {
-              res
-                .status(401)
-                .send("Psikotes Anda telah selesai. Terima kasih.");
+              await prisma.participant.update({
+                where: { id: participantId },
+                data: {
+                  currentTest: { increment: 1 },
+                },
+              });
+              res.status(401).json(null);
             }
           }
         }
@@ -166,19 +173,25 @@ export default async function handler(
       res.status(200).json(await startTest());
     } else {
       // tes sedang berjalan
+      await prisma.answer.updateMany({
+        where: {
+          participantId: participant.id,
+          test: participant.currentTest,
+        },
+        data: {
+          end: new Date(),
+        },
+      });
       if (participant.currentTest < tests.length) {
-        await prisma.answer.updateMany({
-          where: {
-            participantId: participant.id,
-            test: participant.currentTest,
-          },
-          data: {
-            end: new Date(),
-          },
-        });
         res.status(200).json(await nextTest());
       } else {
-        res.status(401).send("Psikotes Anda telah selesai. Terima kasih.");
+        await prisma.participant.update({
+          where: { id: participantId },
+          data: {
+            currentTest: { increment: 1 },
+          },
+        });
+        res.status(401).json(null);
       }
     }
   } else if (req.method === "PUT") {

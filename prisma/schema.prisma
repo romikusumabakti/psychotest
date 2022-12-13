@@ -38,11 +38,20 @@ model Psychotest {
 //   PAPI
 // }
 
+enum Gender {
+  MALE
+  FEMALE
+}
+
 model Participant {
   id           Int        @id @default(autoincrement())
   number       Int
   nip          String
   name         String
+  dateOfBirth  DateTime?
+  gender       Gender?
+  position     String?
+  workUnit     String?
   psychotest   Psychotest @relation(fields: [psychotestId], references: [id])
   psychotestId Int
   testStart    DateTime?

@@ -7,144 +7,50 @@ body {
   font-family: Google Sans Text, sans-serif;
 }
 
-@layer base {
-  @font-face {
-    font-family: "Google Sans Display";
-    src: url("./fonts/Google Sans Display/GoogleSansDisplay-Regular.ttf");
-    font-weight: normal;
-    font-style: normal;
-  }
+::-webkit-scrollbar {
+  @apply w-2;
+}
 
-  @font-face {
-    font-family: "Google Sans Display";
-    src: url("./fonts/Google Sans Display/GoogleSansDisplay-Italic.ttf");
-    font-weight: normal;
-    font-style: italic;
-  }
+::-webkit-scrollbar-track {
+  @apply bg-primary/5 rounded-full;
+}
 
-  @font-face {
-    font-family: "Google Sans Display";
-    src: url("./fonts/Google Sans Display/GoogleSansDisplay-Medium.ttf");
-    font-weight: 500;
-    font-style: normal;
-  }
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/[.15] rounded-full;
+}
 
-  @font-face {
-    font-family: "Google Sans Display";
-    src: url("./fonts/Google Sans Display/GoogleSansDisplay-MediumItalic.ttf");
-    font-weight: 500;
-    font-style: italic;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.display {
+  font-family: Google Sans Display, sans-serif;
+}
 
-  @font-face {
-    font-family: "Google Sans Display";
-    src: url("./fonts/Google Sans Display/GoogleSansDisplay-Bold.ttf");
-    font-weight: bold;
-    font-style: normal;
-  }
+h1 {
+  @apply text-2xl;
+}
 
-  @font-face {
-    font-family: "Google Sans Display";
-    src: url("./fonts/Google Sans Display/GoogleSansDisplay-BoldItalic.ttf");
-    font-weight: bold;
-    font-style: italic;
-  }
+h2 {
+  @apply text-xl;
+}
 
-  @font-face {
-    font-family: "Google Sans Text";
-    src: url("./fonts/Google Sans Text/GoogleSansText-Regular.ttf");
-    font-weight: normal;
-    font-style: normal;
-  }
+a {
+  @apply text-primary hover:underline;
+}
 
-  @font-face {
-    font-family: "Google Sans Text";
-    src: url("./fonts/Google Sans Text/GoogleSansText-Italic.ttf");
-    font-weight: normal;
-    font-style: italic;
-  }
+p {
+  @apply text-justify;
+}
 
-  @font-face {
-    font-family: "Google Sans Text";
-    src: url("./fonts/Google Sans Text/GoogleSansText-Medium.ttf");
-    font-weight: 500;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: "Google Sans Text";
-    src: url("./fonts/Google Sans Text/GoogleSansText-MediumItalic.ttf");
-    font-weight: 500;
-    font-style: italic;
-  }
-
-  @font-face {
-    font-family: "Google Sans Text";
-    src: url("./fonts/Google Sans Text/GoogleSansText-Bold.ttf");
-    font-weight: bold;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: "Google Sans Text";
-    src: url("./fonts/Google Sans Text/GoogleSansText-BoldItalic.ttf");
-    font-weight: bold;
-    font-style: italic;
-  }
-
-  ::-webkit-scrollbar {
-    @apply w-2;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-primary/5 rounded-full;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-primary/[.15] rounded-full;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  .display {
-    font-family: Google Sans Display, sans-serif;
-  }
-
-  h1 {
-    @apply text-2xl;
-  }
-
-  h2 {
-    @apply text-xl;
-  }
-
-  a {
-    @apply text-primary hover:underline;
-  }
-
-  [data-nextjs-scroll-focus-boundary] {
-    @apply overflow-y-auto flex flex-col grow;
-  }
+[data-nextjs-scroll-focus-boundary] {
+  @apply overflow-y-auto flex flex-col grow;
 }
 
 .card {
   @apply p-8 bg-primary/5 rounded-3xl;
-}
-
-.button {
-  @apply h-10 px-6 rounded-full font-medium text-sm flex gap-2 items-center justify-center hover:bg-gradient-to-r;
-}
-
-.button-filled {
-  @apply bg-primary text-on-primary from-on-primary/[.08] to-on-primary/[.08];
-}
-
-.button-tonal {
-  @apply bg-secondary-container text-on-secondary-container from-on-secondary-container/[.08] to-on-secondary-container/[.08];
 }
 
 input[type="text"] {

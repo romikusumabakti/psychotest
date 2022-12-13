@@ -1,52 +1,56 @@
 import * as RadioGroup from "@radix-ui/react-radio-group";
+import Markdown, { compiler } from "markdown-to-jsx";
 import Image from "next/image";
 import { InputHTMLAttributes } from "react";
 import { Question } from "../app/page";
 import TextField from "./text-field";
 
 interface QuestionProps extends InputHTMLAttributes<HTMLInputElement> {
+  number?: number;
   question: Question;
   answer?: string;
   onValueChange?: (value: string) => void;
 }
 
 export default function QuestionCard({
+  number,
   question,
   answer,
   onValueChange,
   ...props
 }: QuestionProps) {
   return (
-    <div className="flex flex-col gap-4 card">
-      {question.question && (
-        <p>
-          {question.question.endsWith(".svg") ? (
-            <Image
-              src={`/tests/${question.question}`}
-              alt=""
-              width={128}
-              height={0}
-            />
-          ) : (
-            question.question
-          )}
-        </p>
-      )}
-      <>
+    <div className="flex gap-4 card">
+      {number && <div>{number}</div>}
+      <span className="flex flex-col gap-4 grow">
+        {question.question && (
+          <p>
+            {question.question.endsWith(".svg") ? (
+              <Image
+                src={`/tests/${question.question}`}
+                alt=""
+                width={128}
+                height={0}
+              />
+            ) : (
+              question.question
+            )}
+          </p>
+        )}
         {question.answers ? (
           // <RadioButtons entries={question.answers} value={answer} {...props} />
           <RadioGroup.Root
-            className="flex items-center justify-between gap-4"
+            className="flex justify-between gap-4 grow"
             value={answer}
             onValueChange={onValueChange}
           >
             {Object.keys(question.answers).map((key, i) => (
-              <label key={i} className="flex items-center flex-1 gap-4">
+              <label key={i} className="flex flex-1 gap-4">
                 <RadioGroup.Item
                   value={key}
                   className="flex items-center justify-center shrink-0 text-sm w-6 h-6 rounded-full bg-secondary-container from-on-secondary-container/[.08] to-on-secondary-container/[.08] radix-state-checked:bg-primary radix-state-checked:from-on-primary/[.08] radix-state-checked:to-on-primary/[.08] hover:bg-gradient-to-r"
                 >
-                  {(i + 10).toString(36).toUpperCase()}
+                  {key.toUpperCase()}
                   <RadioGroup.Indicator />
                 </RadioGroup.Item>
                 {question.answers![key].endsWith(".svg") ? (
@@ -99,12 +103,17 @@ export default function QuestionCard({
             ))}
           </div>
         ) : (
-          <TextField className="w-full" value={answer} {...props} />
+          <TextField
+            className="w-full"
+            value={answer}
+            onChange={(e) => onValueChange && onValueChange(e.target.value)}
+            {...props}
+          />
         )}
-      </>
-      {question.explanation && (
-        <p className="text-sm">{question.explanation}</p>
-      )}
+        {question.explanation && (
+          <Markdown className="text-sm">{question.explanation}</Markdown>
+        )}
+      </span>
     </div>
   );
 }
